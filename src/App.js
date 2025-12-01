@@ -6,12 +6,17 @@ import Quiz from './pages/Quiz';
 import ScoreSummary from './pages/ScoreSummary';
 import HighScores from './pages/HighScores';
 import { HighScoreProvider } from './context/HighScoreContext';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 
-function App() {
+function AppContent() {
+  const { isDark } = useTheme();
+  
   return (
     <HighScoreProvider>
       <Router>
-        <div className="min-h-screen bg-gray-100 text-gray-800 font-sans">
+        <div className={`min-h-screen font-sans transition-colors duration-200 ${
+          isDark ? 'bg-gray-900 text-gray-100' : 'bg-gray-100 text-gray-800'
+        }`}>
           <Navbar />
           <div className="container mx-auto p-4">
             <Routes>
@@ -24,6 +29,14 @@ function App() {
         </div>
       </Router>
     </HighScoreProvider>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 
